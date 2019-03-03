@@ -1,7 +1,9 @@
 #!/bin/bash
+
 dirPath=$1
 program=$2
 file=./makefile
+#testttttttttttttt
 if [ -e "$dirPath/$file" ]; then
     make
     if [ $? -eq 0 ]; then
