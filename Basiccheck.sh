@@ -1,7 +1,9 @@
 #!/bin/bash
 dirPath=$1
 program=$2
+argu="$3"
 file=./makefile
+
 if [ -e "$dirPath/$file" ]; then
     make
     if [ $? -eq 0 ]; then
@@ -25,7 +27,17 @@ if [ -e "$dirPath/$file" ]; then
       else
         echo "Memory Leaks Fail"
         rm leaks.txt
-        exit 3
+        valgrind --tool=helgrind $dirPath/$program > threadRace.txt 2>&1
+        grep -q "ERROR SUMMARY: 0 errors" threadRace.txt
+        if [ $? -eq 0 ]; then
+          echo "Thread Race Pass"
+          rm threadRace.txt
+          exit 2
+        else
+          echo "Thread Race Fail"
+          rm threadRace.txt
+          exit 3
+        fi
       fi
     else
       echo "Compilation Fail"
