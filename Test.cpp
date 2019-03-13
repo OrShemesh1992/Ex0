@@ -16,8 +16,8 @@ void transferMoney(int amount, Account& from, Account& to){
 }
 
 int main(){
-        int *stam = new int[333];
 
+int * d=new int[1000];
         std::cout << std::endl;
 
         Account account1;
